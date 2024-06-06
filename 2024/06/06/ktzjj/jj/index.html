@@ -22,7 +22,7 @@
 
 <link href="/css/style.css?v=1.1.0" rel="stylesheet">
 
-<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+<link href="/css/hl_theme/darcula.css?v=1.1.0" rel="stylesheet">
 
 <link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
 
@@ -75,13 +75,7 @@
 
 
 <ul>
-    <li>
-        <div class="all active" data-rel="全部文章">全部文章
-            
-                <small>(6)</small>
-            
-        </div>
-    </li>
+
     
         
             
@@ -258,13 +252,6 @@
     </div>
     <div>
         
-            <a class="about  hasFriend  site_url"
-               
-               href="/about">关于</a>
-        
-        <a style="width: 50%"
-                
-                                           class="friends">友链</a>
         
     </div>
 </div>
@@ -419,17 +406,6 @@
     <div class="article-meta">
         
         
-        <span id="busuanzi_container_page_pv">
-            阅读 :<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </span>
-        </span>
-        
         
     </div>
     
@@ -492,18 +468,28 @@
     function initArticle() {
         /*渲染对应的表格样式*/
         
-            $("#post .pjax table").addClass("green_title");
-        
 
         /*渲染打赏样式*/
         
 
         /*高亮代码块行号*/
         
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
 
         /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
         
 
         /*代码高亮，行号对齐*/
@@ -519,6 +505,38 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 18px 3px 15px 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
 
 <!--自定义样式设置-->
 <style>
@@ -613,7 +631,7 @@
         top: 0;
         width: 100%;
         height: 100%;
-        opacity: 0.2;
+        opacity: 0.5;
         background: url("/img/bg2.jpg");
         background-repeat: no-repeat;
         background-position: 50% 0;
